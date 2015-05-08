@@ -21,6 +21,61 @@ class ProjectsController < ApplicationController
   def edit
   end
 
+  # POST /projects/1/import
+  def import
+    @project = Project.find(params[:project_id])
+    @language = Language.find(params[:language_id])
+    content = JSON.parse params[:file].read
+    import_terms = params[:import_terms] == "on"
+
+    if @project.kind == 2
+      # poeditor style json files, as array, element example:
+      #
+      #  "term": "bound##panel##points",
+      #  "definition": {
+      #      "one": "__count__ Punkt",
+      #      "other": "__count__ Punkte"
+      #  },
+      #  "context": "",
+      #  "term_plural": "bound##panel##points",
+      #  "reference": "",
+      #  "comment": ""
+
+      content.each do |entry|
+        # try to find the term
+        term_title = entry["term"].gsub '##', '.'
+        term_plural = !entry["term_plural"].empty?
+        term = @project.terms.find_by title: term_title
+
+        # create term if needed
+        if import_terms and not term
+          term = Term.new title: term_title, project: @project, plural: term_plural
+          term.save!
+        end
+
+        # import translation
+        if term
+          translation = @language.translate term
+
+          if term_plural
+            translation.title = entry["definition"]["one"]
+            translation.title_plural = entry["definition"]["other"]
+          else
+            translation.title = entry["definition"]
+          end
+
+          translation.save!
+        end
+
+
+      end
+
+      redirect_to @project, notice: 'Import erfolgreich'
+    else
+      redirect_to @project, alert: 'Sorry, das geht so nicht :('
+    end
+  end
+
   # POST /projects
   # POST /projects.json
   def create

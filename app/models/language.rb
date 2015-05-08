@@ -14,4 +14,8 @@ class Language < ActiveRecord::Base
     translation
   end
 
+  def to_s
+    title
+  end
+  
 end

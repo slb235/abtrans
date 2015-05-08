@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :projects do
+    post 'import'
     resources :languages do
       resources :translations
     end

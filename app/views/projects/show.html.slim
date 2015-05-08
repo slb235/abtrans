@@ -6,6 +6,28 @@ h2 = @project.title
 | 
 = link_to 'Terms', project_terms_path(@project), class: 'btn btn-default'
 br
+br
+
+.panel.panel-default
+  .panel-heading Sprachdatei importieren
+  .panel-body
+    form method="POST" action=project_import_path(@project) enctype="multipart/form-data"
+      input name="authenticity_token" type="hidden" value=form_authenticity_token
+      .form-group
+        label for="file" Datei
+        input type="file" name="file"
+      .form-group
+        label for="language_id" Sprache
+        select.form-control name="language_id"
+          - @project.languages.each do |language|
+            option value=language.id = language.title
+      .checkbox
+        label
+          input type="checkbox" name="import_terms"
+          | Terms mit importieren
+      button.btn.btn-primary type="submit" Importieren
+
+br
 = link_to 'Edit', edit_project_path(@project)
 '|
 = link_to 'Back', projects_path

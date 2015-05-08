@@ -12,7 +12,7 @@ table.table.table-striped.table-bordered
           = language.title
           br
           .progress
-            .progress-bar role="progressbar" style="width: #{100*language.translations.count/@project.terms.count}%; min-width: 2em;"
+            .progress-bar role="progressbar" style="width: #{100*language.translations.count/(@project.terms.count > 0 ? @project.terms.count : 1)}%; min-width: 2em;"
               = language.translations.count
               | /
               = @project.terms.count
