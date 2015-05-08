@@ -1,0 +1,11 @@
+p#notice = notice
+
+h2 = @project.title
+
+= link_to 'Sprachen', project_languages_path(@project), class: 'btn btn-default'
+| 
+= link_to 'Terms', project_terms_path(@project), class: 'btn btn-default'
+br
+= link_to 'Edit', edit_project_path(@project)
+'|
+= link_to 'Back', projects_path

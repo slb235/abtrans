@@ -1,0 +1,22 @@
+h3 #{@project.title} Terms
+
+table.table.table-striped.table-bordered
+
+  thead
+    tr
+      th Title
+      th Plural
+      th
+      th
+
+  tbody
+    - @project.terms.each do |term|
+      tr
+        td = term.title
+        td = term.plural
+        td = link_to 'Edit', edit_project_term_path(@project, term)
+        td = link_to 'Destroy', [@project, term], data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Term', new_project_term_path(@project)

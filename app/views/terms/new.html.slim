@@ -1,0 +1,20 @@
+h1 New term/terms
+
+= form_for [@project, @term] do |f|
+  - if @term.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@term.errors.count, "error")} prohibited this term from being saved:"
+      ul
+        - @term.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = f.label :title
+    = f.text_area :title, class: 'form-control'
+  .form-group
+    = f.label :plural
+    = f.check_box :plural
+
+  .actions = f.submit
+
+= link_to 'Back', project_terms_path(@project)

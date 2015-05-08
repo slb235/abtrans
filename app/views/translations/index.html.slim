@@ -1,0 +1,22 @@
+h1 Listing translations
+
+table.table.table-striped.table-bordered
+  thead
+    tr
+      th Title
+      th Übersetzung
+
+
+  tbody
+    - @project.terms.each do |term|
+      tr
+        td = term.title
+        td 
+          - translation = @language.translate(term)
+          .form-group.has-success.has-feedback
+            textarea class="form-control auto-save" data-project=@project.id data-id=translation.id data-term=term.id data-language=@language.id = translation.title
+            span.glyphicon.glyphicon-ok.form-control-feedback
+
+
+br
+

@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @translation.title
+p
+  strong Title plural:
+  = @translation.title_plural
+p
+  strong Language:
+  = @translation.language
+p
+  strong Term:
+  = @translation.term
+
+= link_to 'Edit', edit_translation_path(@translation)
+'|
+= link_to 'Back', translations_path

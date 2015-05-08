@@ -18,7 +18,7 @@ gem 'devise-i18n'
 gem 'pundit'
 gem 'slim-rails'
 gem 'therubyracer', :platform=>:ruby
-gem 'upmin-admin'
+gem 'upmin-admin', :git => 'https://github.com/upmin/upmin-admin-ruby.git', :ref => 'bb20ea28e4ae2ff9c9f715d895726319acf5730b'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]

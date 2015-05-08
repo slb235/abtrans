@@ -1,0 +1,16 @@
+= form_for [@project, @language] do |f|
+  - if @language.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@language.errors.count, "error")} prohibited this language from being saved:"
+      ul
+        - @language.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = f.label :title, "Sprache"
+    = f.text_field :title, class: 'form-control'
+  .form-group
+    = f.label :locale, "Code nach ISO 3166 z.B. de"
+    = f.text_field :locale, class: 'form-control'
+
+  .actions = f.submit "Speichern", class: 'btn btn-primary'

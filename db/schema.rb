@@ -11,7 +11,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504183630) do
+ActiveRecord::Schema.define(version: 20150504195510) do
+
+  create_table "languages", force: :cascade do |t|
+    t.string   "title"
+    t.string   "locale"
+    t.integer  "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "languages", ["project_id"], name: "index_languages_on_project_id"
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "terms", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "project_id"
+    t.boolean  "plural"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "terms", ["project_id"], name: "index_terms_on_project_id"
+
+  create_table "translations", force: :cascade do |t|
+    t.string   "title"
+    t.string   "title_plural"
+    t.integer  "language_id"
+    t.integer  "term_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "translations", ["language_id"], name: "index_translations_on_language_id"
+  add_index "translations", ["term_id"], name: "index_translations_on_term_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

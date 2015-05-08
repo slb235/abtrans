@@ -1,0 +1,29 @@
+h1 = @project.title
+
+table.table.table-striped.table-bordered
+  thead
+    tr
+      th Sprache
+      th Aktionen
+  tbody
+    - @project.languages.each do |language|
+      tr
+        td 
+          = language.title
+          br
+          .progress
+            .progress-bar role="progressbar" style="width: #{100*language.translations.count/@project.terms.count}%; min-width: 2em;"
+              = language.translations.count
+              | /
+              = @project.terms.count
+        td
+          = link_to 'Übersetzten', project_language_translations_path(@project, language), class: 'btn btn-primary'
+          |  
+          = link_to 'Bearbeiten', edit_project_language_path(@project, language), class: 'btn btn-success'
+          |  
+          = link_to 'Löschen', project_language_path(@project, language), data: {:confirm => 'Sicher?'}, method: :delete, class: 'btn btn-danger'
+          |  
+
+br
+
+= link_to 'Sprache hinzufügen', new_project_language_path(@project), class: 'btn btn-primary'
