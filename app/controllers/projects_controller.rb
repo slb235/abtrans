@@ -58,13 +58,24 @@ class ProjectsController < ApplicationController
           translation = @language.translate term
 
           if term_plural
-            translation.title = entry["definition"]["one"]
-            translation.title_plural = entry["definition"]["other"]
+            if entry["definition"].nil? or ( entry["definition"]["one"].empty? and entry["definition"]["other"].empty? )
+              translation.destroy
+            else
+              translation.title = entry["definition"]["one"]
+              translation.title_plural = entry["definition"]["other"]
+              translation.save!
+            end
           else
-            translation.title = entry["definition"]
+
+            if entry["definition"].nil? or entry["definition"].empty?
+              translation.destroy
+            else
+              translation.title = entry["definition"]
+              translation.save!
+            end
           end
 
-          translation.save!
+          
         end
 
 
